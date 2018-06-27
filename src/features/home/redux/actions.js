@@ -5,3 +5,4 @@ export { searchGames, dismissSearchGamesError } from './searchGames';
 export { openPosJogo } from './openPosJogo';
 export { handleRoundNumberChange } from './handleRoundNumberChange';
 export { searchTeams, dismissSearchTeamsError } from './searchTeams';
+export { buildTable, dismissBuildTableError } from './buildTable';

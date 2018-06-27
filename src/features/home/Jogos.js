@@ -51,7 +51,6 @@ export class Jogos extends Component {
           {
             this.props.home.cards.map(function(card, i) {
               return (
-                card.placar1 !== null ?
                 <Grid item xs={12} sm={6} lg={4}>
                   <Card className='card' key={i}>
                     <CardContent
@@ -81,12 +80,24 @@ export class Jogos extends Component {
                           {`Horario : ${card.horario}`}
                         </span>
                       </Typography>
-                      <Typography 
-                        gutterBottom 
-                        variant="headline" 
-                        component="h2">
-                        {`${card.placar1} x ${card.placar2}`}
-                      </Typography>
+                      {
+                        card.placar1 !== null ?
+                        <Typography 
+                          gutterBottom 
+                          variant="headline" 
+                          component="h2">
+                          {`${card.placar1} x ${card.placar2}`}
+                        </Typography> 
+                        :
+                        <Typography
+                          gutterBottom 
+                          variant="headline" 
+                          component="h2">
+                          Placar Indefinido
+                        </Typography>
+                      }
+                      
+                       
                     </CardContent>
                     <Button 
                       variant="outlined" 
@@ -97,7 +108,6 @@ export class Jogos extends Component {
                     </Button>
                   </Card>
                 </Grid>
-                : null
               ) 
             }, this)
           }

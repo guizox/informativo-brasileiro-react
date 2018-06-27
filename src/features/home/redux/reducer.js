@@ -6,6 +6,7 @@ import { reducer as searchGamesReducer } from './searchGames';
 import { reducer as openPosJogoReducer } from './openPosJogo';
 import { reducer as handleRoundNumberChangeReducer } from './handleRoundNumberChange';
 import { reducer as searchTeamsReducer } from './searchTeams';
+import { reducer as buildTableReducer } from './buildTable';
 
 const reducers = [
   jogosClickReducer,
@@ -15,6 +16,7 @@ const reducers = [
   openPosJogoReducer,
   handleRoundNumberChangeReducer,
   searchTeamsReducer,
+  buildTableReducer,
 ];
 
 export default function reducer(state = initialState, action) {

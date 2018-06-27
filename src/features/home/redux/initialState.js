@@ -12,7 +12,9 @@ const initialState = {
   searchGamesPending: false,
   searchGamesError: null,
   searchTeamsPending: false,
-  searchTeamsError: null
+  searchTeamsError: null,
+  buildTablePending: false,
+  buildTableError: null
 };
 
 export default initialState;

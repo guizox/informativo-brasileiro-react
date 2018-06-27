@@ -1,18 +1,17 @@
 import axios from 'axios';
 import {
-  HOME_SEARCH_GAMES_BEGIN,
-  HOME_SEARCH_GAMES_SUCCESS,
-  HOME_SEARCH_GAMES_FAILURE,
-  HOME_SEARCH_GAMES_DISMISS_ERROR,
+  HOME_SEARCH_TEAMS_BEGIN,
+  HOME_SEARCH_TEAMS_SUCCESS,
+  HOME_SEARCH_TEAMS_FAILURE,
+  HOME_SEARCH_TEAMS_DISMISS_ERROR,
 } from './constants';
 
 // Rekit uses redux-thunk for async actions by default: https://github.com/gaearon/redux-thunk
 // If you prefer redux-saga, you can use rekit-plugin-redux-saga: https://github.com/supnate/rekit-plugin-redux-saga
-export function searchGames(args = { }) {
-  const roundNumber = args;
+export function searchTeams(args = {}) {
   return (dispatch) => { // optionally you can have getState as the second argument
     dispatch({
-      type: HOME_SEARCH_GAMES_BEGIN,
+      type: HOME_SEARCH_TEAMS_BEGIN,
     });
 
     // Return a promise so that you could control UI flow without states in the store.
@@ -23,44 +22,25 @@ export function searchGames(args = { }) {
       // doRequest is a placeholder Promise. You should replace it with your own logic.
       // See the real-word example at:  https://github.com/supnate/rekit/blob/master/src/features/home/redux/fetchRedditReactjsList.js
       // args.error here is only for test coverage purpose.
-      const doRequest = axios.get('http://yfipassword.000webhostapp.com/server/YFiPassword/php/getJsonUol1.php')
+      const doRequest = axios.get('http://yfipassword.000webhostapp.com/server/YFiPassword/php/getJsonUol1.php');
       doRequest.then(
         (res) => {
           const result = res.data;
-
-          console.log(res);
-          const jogos = new Array();
-          for (let i = 0; i < result.fases['2700'].jogos.rodada[roundNumber].length; i++){
-            let id = result.fases['2700'].jogos.rodada[roundNumber][i],
-              time1 = parseInt(result.fases['2700'].jogos.id[id]['time1']),
-              time2 = parseInt(result.fases['2700'].jogos.id[id]['time2']);
-
-            for (let j = 0; j < Object.keys(result["equipes"]).length; j++){
-              let equipe = Object.keys(result["equipes"])[j];
-              if (time1 == parseInt(result["equipes"][equipe].id)){
-                time1 = result["equipes"][equipe];
-              }
-              if (time2 == parseInt(result["equipes"][equipe].id)){
-                time2 = result["equipes"][equipe];
-              }
-            }
-
-            result.fases['2700'].jogos.id[id]['time1'] = time1;
-            result.fases['2700'].jogos.id[id]['time2'] = time2;
-            jogos.push(result.fases['2700'].jogos.id[id]);
+          let equipes = new Array();
+          for (let j = 0; j < Object.keys(result["equipes"]).length; j++){
+            equipes.push(result["equipes"][Object.keys(result["equipes"])[j]]);
           }
-
           dispatch({
-            type: HOME_SEARCH_GAMES_SUCCESS,
-            payload: jogos,
+            type: HOME_SEARCH_TEAMS_SUCCESS,
+            payload: equipes,
           });
-          console.log(res);
           resolve(res);
+          
         },
         // Use rejectHandler as the second argument so that render errors won't be caught.
         (err) => {
           dispatch({
-            type: HOME_SEARCH_GAMES_FAILURE,
+            type: HOME_SEARCH_TEAMS_FAILURE,
             data: { error: err },
           });
           reject(err);
@@ -74,45 +54,44 @@ export function searchGames(args = { }) {
 
 // Async action saves request error by default, this method is used to dismiss the error info.
 // If you don't want errors to be saved in Redux store, just ignore this method.
-export function dismissSearchGamesError() {
+export function dismissSearchTeamsError() {
   return {
-    type: HOME_SEARCH_GAMES_DISMISS_ERROR,
+    type: HOME_SEARCH_TEAMS_DISMISS_ERROR,
   };
 }
 
 export function reducer(state, action) {
   switch (action.type) {
-    case HOME_SEARCH_GAMES_BEGIN:
+    case HOME_SEARCH_TEAMS_BEGIN:
       // Just after a request is sent
       return {
         ...state,
-        searchGamesPending: true,
-        searchGamesError: null,
+        searchTeamsPending: true,
+        searchTeamsError: null,
       };
 
-    case HOME_SEARCH_GAMES_SUCCESS:
-      console.log(action);
+    case HOME_SEARCH_TEAMS_SUCCESS:
       // The request is success
       return {
         ...state,
-        cards: action.payload,
-        searchGamesPending: false,
-        searchGamesError: null,
+        equipes: action.payload,
+        searchTeamsPending: false,
+        searchTeamsError: null,
       };
 
-    case HOME_SEARCH_GAMES_FAILURE:
+    case HOME_SEARCH_TEAMS_FAILURE:
       // The request is failed
       return {
         ...state,
-        searchGamesPending: false,
-        searchGamesError: action.data.error,
+        searchTeamsPending: false,
+        searchTeamsError: action.data.error,
       };
 
-    case HOME_SEARCH_GAMES_DISMISS_ERROR:
+    case HOME_SEARCH_TEAMS_DISMISS_ERROR:
       // Dismiss the request failure error
       return {
         ...state,
-        searchGamesError: null,
+        searchTeamsError: null,
       };
 
     default:

@@ -3,12 +3,18 @@ import { reducer as jogosClickReducer } from './jogosClick';
 import { reducer as timesClickReducer } from './timesClick';
 import { reducer as tabelaClickReducer } from './tabelaClick';
 import { reducer as searchGamesReducer } from './searchGames';
+import { reducer as openPosJogoReducer } from './openPosJogo';
+import { reducer as handleRoundNumberChangeReducer } from './handleRoundNumberChange';
+import { reducer as searchTeamsReducer } from './searchTeams';
 
 const reducers = [
   jogosClickReducer,
   timesClickReducer,
   tabelaClickReducer,
   searchGamesReducer,
+  openPosJogoReducer,
+  handleRoundNumberChangeReducer,
+  searchTeamsReducer,
 ];
 
 export default function reducer(state = initialState, action) {

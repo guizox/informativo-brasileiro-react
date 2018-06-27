@@ -24,7 +24,7 @@ export class Header extends Component {
             <IconButton  color="inherit" aria-label="Menu">
             </IconButton>
             <Typography variant="title" color="inherit" >
-              ICP
+              Informativo Brasileirão
             </Typography>
             <Button 
               color="inherit"

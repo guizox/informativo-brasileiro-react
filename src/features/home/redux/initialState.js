@@ -1,9 +1,8 @@
 const initialState = {
   windowToRender: 'jogos',
-  cards : [ 
-    {time1 : 'corinthias', time2: 'sao paulo', placar1: 1, placar2: 2},
-    {time1 : 'palmeiras', time2: 'santos', placar1: 1, placar2: 3}
-  ],
+  roundNumber: 1,
+  cards : [ ],
+  equipes: [ ],
   jogosClickPending: false,
   jogosClickError: null,
   timesClickPending: false,
@@ -11,7 +10,9 @@ const initialState = {
   tabelaClickPending: false,
   tabelaClickError: null,
   searchGamesPending: false,
-  searchGamesError: null
+  searchGamesError: null,
+  searchTeamsPending: false,
+  searchTeamsError: null
 };
 
 export default initialState;
